@@ -1,3 +1,6 @@
+switchOnOffMusicalPerformance(100);
+
+
 var gameCanvas;
 window.addEventListener('load', (event) => {
   gameCanvas = document.getElementsByTagName('canvas')[0];
@@ -134,13 +137,13 @@ function update ()
     return;
   }
   
-  if (cursors.left.isDown)
+  if (cursors.left.isDown || (noteObjectOnByMidiNoteNumber.size > 0 && midiChlorianCtrlr.countDecreased))
   {
     player.setVelocityX(-160);
 
     player.anims.play('left', true);
   }
-  else if (cursors.right.isDown)
+  else if (cursors.right.isDown || (noteObjectOnByMidiNoteNumber.size > 0 && midiChlorianCtrlr.countIncreased))
   {
     player.setVelocityX(160);
 
@@ -213,22 +216,22 @@ function hitBomb (player, bomb)
           console.error(e.name + ': '+e.message);
       }
   }
-  try {
-      if(oneMidiChlorianCtrlrEvent.midiInputPlaying.command == 144) {
-          if(oneMidiChlorianCtrlrEvent.countIncreased) {
-            player.setVelocityX(500);
-            player.anims.play('right', true);
-          } else if ( oneMidiChlorianCtrlrEvent.countDecreased ) {
-            player.setVelocityX(-500);
-            player.anims.play('left', true);
-          } else {
-            player.setVelocityX(0);
-            player.anims.play('turn');
-          }
-      }
-  } catch(e) {
-      console.error(e.name + ': '+e.message + "; stack: "+e.stack);
-  }
+  // try {
+  //     if(oneMidiChlorianCtrlrEvent.midiInputPlaying.command == 144) {
+  //         if(oneMidiChlorianCtrlrEvent.countIncreased) {
+  //           player.setVelocityX(500);
+  //           player.anims.play('right', true);
+  //         } else if ( oneMidiChlorianCtrlrEvent.countDecreased ) {
+  //           player.setVelocityX(-500);
+  //           player.anims.play('left', true);
+  //         } else {
+  //           player.setVelocityX(0);
+  //           player.anims.play('turn');
+  //         }
+  //     }
+  // } catch(e) {
+  //     console.error(e.name + ': '+e.message + "; stack: "+e.stack);
+  // }
   // setTimeout(
   //     function() {
   //       if(musicConductor.chordsPlaying.length  == 0) {
