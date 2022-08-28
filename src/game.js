@@ -153,7 +153,7 @@ function update ()
     player.anims.play('turn');
   }
 
-  if (cursors.up.isDown && player.body.touching.down)
+  if ((cursors.up.isDown || musicConductor.chordsPlaying.length  > 0) && player.body.touching.down)
   {
     player.setVelocityY(-330);
   }
@@ -190,3 +190,67 @@ function hitBomb (player, bomb)
 
   gameOver = true;
 }
+
+
+
+/** 
+ * @description listens to midi-chlorian controller event which are events based on 
+ * midi notes currently playing.
+ * - moves player left or right if the player went up or down the register. 
+ * @listens MidiInstrumentationEvents.MIDICHLORIANCTRLEVENT - published from
+ *  midiChlorianController.js' MidiInstrumentationEvents.NOTEBEINGPLAYED event listener.
+ * @param e.value - stringified midiChlorianCtrlr 
+ * @returns void
+ */
+ document.addEventListener(MidiInstrumentationEvents.MIDICHLORIANCTRLEVENT, function(e) {
+  const oneMidiChlorianCtrlrEvent = JSON.parse(e.value);
+  var midiNoteNumber = Number(oneMidiChlorianCtrlrEvent.midiInputPlaying.note);
+  //Play Piano Sounds when playing on computer keyboardw
+  if(oneMidiChlorianCtrlrEvent.midiInputPlaying.eventType == 'KEYBOARD') {
+      try {
+          document.getElementById(oneMidiChlorianCtrlrEvent.midiInputPlaying.noteName).play();
+      } catch (e) {
+          console.error(e.name + ': '+e.message);
+      }
+  }
+  try {
+      if(oneMidiChlorianCtrlrEvent.midiInputPlaying.command == 144) {
+          if(oneMidiChlorianCtrlrEvent.countIncreased) {
+            player.setVelocityX(500);
+            player.anims.play('right', true);
+          } else if ( oneMidiChlorianCtrlrEvent.countDecreased ) {
+            player.setVelocityX(-500);
+            player.anims.play('left', true);
+          } else {
+            player.setVelocityX(0);
+            player.anims.play('turn');
+          }
+      }
+  } catch(e) {
+      console.error(e.name + ': '+e.message + "; stack: "+e.stack);
+  }
+  // setTimeout(
+  //     function() {
+  //       if(musicConductor.chordsPlaying.length  == 0) {
+  //         player.setVelocityX(0);
+  //         player.anims.play('turn');
+  //       }
+  //     }, 
+  //     //hardcoding beat duration for .25 second for now... assuming 4 4 time
+  //     //TODO idea: use beat duration instead to cause affect on object to persist while note was held down
+  //     250
+  // );
+});
+
+//Stop piano sound being played when no longer playing using computer keyboard
+document.addEventListener(MidiInstrumentationEvents.NOTELASTPLAYED, function(e){
+  const oneNoteLastPlayed = JSON.parse(e.value);
+  var midiNoteNumber = Number(oneNoteLastPlayed.note);
+  if(oneNoteLastPlayed.eventType == 'KEYBOARD') {
+      try {
+          document.getElementById(oneNoteLastPlayed.noteName).pause();
+      } catch (e) {
+          console.error(e.name + ': '+e.message);
+      }
+  }
+});
