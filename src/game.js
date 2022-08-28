@@ -16,6 +16,33 @@ var config = {
 
 var game = new Phaser.Game(config);
 
+var gameCanvas;
+window.addEventListener('load', (event) => {
+  gameCanvas = document.getElementsByTagName('canvas')[0];
+});
+
+//Resize game canvas to fit the screen
+function resizeCanvasToScreen() {
+  var canvasRatio = gameCanvas.height / gameCanvas.width;
+  var windowRatio = window.innerHeight / window.innerWidth;
+  var width;
+  var height;
+
+  if (windowRatio < canvasRatio) {
+      height = window.innerHeight;
+      width = height / canvasRatio;
+  } else {
+      width = window.innerWidth;
+      height = width * canvasRatio;
+  }
+
+  gameCanvas.style.width = width + 'px';
+  gameCanvas.style.height = height + 'px';
+};
+
+window.addEventListener('resize', resizeCanvasToScreen, false);
+
+
 function preload ()
 {
   this.load.setBaseURL('http://labs.phaser.io');
