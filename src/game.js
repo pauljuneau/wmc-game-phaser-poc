@@ -60,12 +60,18 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-  this.load.setBaseURL('https://labs.phaser.io');
-  this.load.image('sky', 'assets/skies/sky4.png');
-  this.load.image('ground', 'assets/sprites/platform.png');
-  this.load.image('orb', 'assets/sprites/orb-red.png');
-  this.load.image('skull', 'assets/sprites/skull.png');
-  this.load.spritesheet('dude', 'assets/sprites/dude.png', { frameWidth: 32, frameHeight: 48 });
+  // this.load.setBaseURL('https://labs.phaser.io');
+  // this.load.image('sky', 'assets/skies/sky4.png');
+  // this.load.image('ground', 'assets/sprites/platform.png');
+  // this.load.image('orb', 'assets/sprites/orb-red.png');
+  // this.load.image('skull', 'assets/sprites/skull.png');
+  // this.load.spritesheet('dude', 'assets/sprites/dude.png', { frameWidth: 32, frameHeight: 48 });
+  this.load.setBaseURL('https://github.com/pauljuneau/wmc-game-phaser-poc/blob/gh-pages/assets/images');
+  this.load.image('sky', 'sky4.png?raw=true');
+  this.load.image('ground', 'platform.png?raw=true');
+  this.load.image('orb', 'orb-red.png?raw=true');
+  this.load.image('skull', 'skull.png?raw=true');
+  this.load.spritesheet('dude', 'dude.png?raw=true', { frameWidth: 32, frameHeight: 48 });
 }
 
 function create ()
