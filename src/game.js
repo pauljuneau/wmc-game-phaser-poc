@@ -26,15 +26,16 @@ function resizeCanvasToScreen() {
   gameCanvas.style.height = height + 'px';
 };
 
-//window.addEventListener('resize', resizeCanvasToScreen, false);
+window.addEventListener('resize', resizeCanvasToScreen, false);
 
 //Phaser game config
 var config = {
   type: Phaser.AUTO,
-  // width: 800,
-  // height: 600,
+  width: 800,
+  height: 600,
   scale: {
-    mode: Phaser.Scale.FIT
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.Center.CENTER_BOTH
   },
   physics: {
     default: 'arcade',
@@ -84,8 +85,8 @@ function preload ()
 
 function create ()
 {
-  this.scale.displaySize.setAspectRatio( 800/600 );
-  this.scale.refresh();
+  // this.scale.displaySize.setAspectRatio( 800/600 );
+  // this.scale.refresh();
   
   this.add.image(400, 300, 'sky');
 
