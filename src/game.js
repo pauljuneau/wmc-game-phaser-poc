@@ -26,13 +26,16 @@ function resizeCanvasToScreen() {
   gameCanvas.style.height = height + 'px';
 };
 
-window.addEventListener('resize', resizeCanvasToScreen, false);
+//window.addEventListener('resize', resizeCanvasToScreen, false);
 
 //Phaser game config
 var config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  // width: 800,
+  // height: 600,
+  scale: {
+    mode: Phaser.Scale.FIT
+  },
   physics: {
     default: 'arcade',
     arcade: {
@@ -68,6 +71,9 @@ function preload ()
   // this.load.image('skull', 'assets/sprites/skull.png');
   // this.load.spritesheet('dude', 'assets/sprites/dude.png', { frameWidth: 32, frameHeight: 48 });
   var baseUrl = window.location.href;
+  if(baseUrl.startsWith('file')) {
+    baseUrl = 'https://www.pauljuneauengineer.com/wmc-game-phaser-poc/';
+  }
   this.load.setBaseURL(baseUrl+'assets/images');
   this.load.image('sky', 'sky4.png');
   this.load.image('ground', 'platform.png');
@@ -78,6 +84,9 @@ function preload ()
 
 function create ()
 {
+  this.scale.displaySize.setAspectRatio( 800/600 );
+  this.scale.refresh();
+  
   this.add.image(400, 300, 'sky');
 
   platforms = this.physics.add.staticGroup();
