@@ -11,4 +11,4 @@ Player movement alterations:
 * Make sure your midi device is plugged into your computer or mobile phone before opening the web browser!
 * No iOS support :frowning_face: 
    * See [MDN MIDIAccess Browser compatibility](https://developer.mozilla.org/en-US/docs/Web/API/MIDIAccess)
-* if trying to run the code locally instead from the github page, then make sure to change the image URL sources in the `preload()` function to the insecure http://labs.phaser.io or hard `baseUrl = https://www.pauljuneauengineer.com/wmc-game-phaser-poc/` in place of `baseUrl = window.location.href`
+* if trying to run the code locally instead from the github page, then make sure to change the image URL sources in the `preload()` function to the insecure http://labs.phaser.io or hard-code `baseUrl = https://www.pauljuneauengineer.com/wmc-game-phaser-poc/` in place of `baseUrl = window.location.href`
