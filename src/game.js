@@ -60,7 +60,8 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-  // this.load.setBaseURL('https://labs.phaser.io');
+  //Leaving this in to allow rendering images on local machine due to CORS policy restriction for file:// paths 
+  // this.load.setBaseURL('http://labs.phaser.io');
   // this.load.image('sky', 'assets/skies/sky4.png');
   // this.load.image('ground', 'assets/sprites/platform.png');
   // this.load.image('orb', 'assets/sprites/orb-red.png');
