@@ -1,38 +1,21 @@
 //Switch on webmidi music conductor engine to interpret midi in real time
 switchOnOffMusicalPerformance(100);
 
-//Resize game canvas to fit screen
-var gameCanvas;
-window.addEventListener('load', (event) => {
-  gameCanvas = document.getElementsByTagName('canvas')[0];
-});
-
-//Resize game canvas to fit the screen
-function resizeCanvasToScreen() {
-  var canvasRatio = gameCanvas.height / gameCanvas.width;
-  var windowRatio = window.innerHeight / window.innerWidth;
-  var width;
-  var height;
-
-  if (windowRatio < canvasRatio) {
-    height = window.innerHeight;
-    width = height / canvasRatio;
-  } else {
-    width = window.innerWidth;
-    height = width * canvasRatio;
-  }
-
-  gameCanvas.style.width = width + 'px';
-  gameCanvas.style.height = height + 'px';
-};
-
-window.addEventListener('resize', resizeCanvasToScreen, false);
-
 //Phaser game config
 var config = {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.Center.CENTER_BOTH,
+    //Uncomment this and comment out other mode to see game scale to the entire screen on mobile. This can cause proportions to look off.
+    //mode: Phaser.Scale.ENVELOPE,
+    max: {
+      width: window.innerWidth,
+      height: window.innerHeight
+    }
+  },
   physics: {
     default: 'arcade',
     arcade: {
@@ -60,7 +43,7 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-  //Leaving this in to allow rendering images on local machine due to CORS policy restriction for file:// paths 
+  //Leaving this in to allow rendering images on local machine due to CORS policy restriction for file:// paths and if assets are no longer hosted on pauljuneauengineer.com
   // this.load.setBaseURL('http://labs.phaser.io');
   // this.load.image('sky', 'assets/skies/sky4.png');
   // this.load.image('ground', 'assets/sprites/platform.png');
@@ -68,6 +51,9 @@ function preload ()
   // this.load.image('skull', 'assets/sprites/skull.png');
   // this.load.spritesheet('dude', 'assets/sprites/dude.png', { frameWidth: 32, frameHeight: 48 });
   var baseUrl = window.location.href;
+  if(baseUrl.startsWith('file')) {
+    baseUrl = 'https://www.pauljuneauengineer.com/wmc-game-phaser-poc/';
+  }
   this.load.setBaseURL(baseUrl+'assets/images');
   this.load.image('sky', 'sky4.png');
   this.load.image('ground', 'platform.png');
